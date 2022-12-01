@@ -8,14 +8,14 @@ from watchdog.events import LoggingEventHandler
 event_handler = LoggingEventHandler()
 observer = Observer()
 
-def file_monitor(watchlist):
+def file_monitor(args):
     logging.basicConfig(level=logging.INFO,
                         format='%(asctime)s - %(message)s',
                         datefmt='%Y-%m-%d %H:%M:%S',
-                        handlers = [logging.FileHandler('watchlog.txt', 'a')]   
+                        handlers = [logging.FileHandler({args[2]}, 'a')]   
                         )
     
-    with open(watchlist[1]) as f:
+    with open(args[1]) as f:
         paths = f.readlines()
 
     watching = []
@@ -26,7 +26,6 @@ def file_monitor(watchlist):
 
     observer.start()
     print('Monitoring started...')
-
 
     try:
         while True:
